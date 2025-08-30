@@ -8,8 +8,8 @@ A complete Authentication system with **Email Verification** & **Password Reset*
 
 ## 🌐 Live Demo
 
-🔗 [**Frontend**](https://mern-auth-fronetnd.vercel.app)  
-🔗 [**Backend API**](https://mern-auth-sigma-azure.vercel.app)
+🔗 [**Live**](https://mern-auth-fronetnd.vercel.app)  
+
 
 ---
 
