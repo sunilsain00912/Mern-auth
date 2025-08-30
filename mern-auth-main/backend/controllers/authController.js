@@ -7,6 +7,7 @@ import {
   PASSWORD_RESET_TEMPLATE,
 } from "../config/emailTemplates.js";
 
+// ================= REGISTER =================
 export const register = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -32,12 +33,12 @@ export const register = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true, // Always true in deployment
-      sameSite: "none", // Important for frontend-backend different domains
+      secure: true,
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    // Sending welcome email
+    // Welcome Email
     const mailOptions = {
       from: process.env.SENDER_EMAIL,
       to: email,
@@ -53,6 +54,7 @@ export const register = async (req, res) => {
   }
 };
 
+// ================= LOGIN =================
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -82,8 +84,8 @@ export const login = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      secure: true,
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -93,12 +95,13 @@ export const login = async (req, res) => {
   }
 };
 
+// ================= LOGOUT =================
 export const logout = async (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      secure: true,
+      sameSite: "none",
     });
 
     return res.json({ success: true, message: "Logged Out" });
@@ -107,7 +110,7 @@ export const logout = async (req, res) => {
   }
 };
 
-// Send Verification OTP to the User's Email
+// ================= SEND VERIFY OTP =================
 export const sendVerifyOtp = async (req, res) => {
   try {
     const { userId } = req.body;
@@ -129,7 +132,6 @@ export const sendVerifyOtp = async (req, res) => {
       from: process.env.SENDER_EMAIL,
       to: user.email,
       subject: "Account Verification OTP",
-      // text: `Your OTP is ${otp}. Verify your account using this OTP.`,
       html: EMAIL_VERIFY_TEMPLATE.replace("{{otp}}", otp).replace(
         "{{email}}",
         user.email
@@ -144,7 +146,7 @@ export const sendVerifyOtp = async (req, res) => {
   }
 };
 
-// Verify the Email using the OTP
+// ================= VERIFY EMAIL =================
 export const verifyEmail = async (req, res) => {
   const { userId, otp } = req.body;
 
@@ -182,7 +184,7 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
-// Check if user is authenticated
+// ================= IS AUTH =================
 export const isAuthenticated = async (req, res) => {
   try {
     return res.json({ success: true });
@@ -191,7 +193,7 @@ export const isAuthenticated = async (req, res) => {
   }
 };
 
-// Send Password Reset OTP
+// ================= SEND RESET OTP =================
 export const sendResetOtp = async (req, res) => {
   const { email } = req.body;
 
@@ -220,7 +222,6 @@ export const sendResetOtp = async (req, res) => {
       from: process.env.SENDER_EMAIL,
       to: user.email,
       subject: "Password Reset OTP",
-      // text: `Your OTP for resetting your password is ${otp}. Use this OTP to proceed with resetting your password.`,
       html: PASSWORD_RESET_TEMPLATE.replace("{{otp}}", otp).replace(
         "{{email}}",
         user.email
@@ -235,7 +236,7 @@ export const sendResetOtp = async (req, res) => {
   }
 };
 
-// Reset User Password
+// ================= RESET PASSWORD =================
 export const resetPassword = async (req, res) => {
   const { email, otp, newPassword } = req.body;
 
