@@ -2,6 +2,21 @@
 
 # MERN AUTH 🔐
 
+A complete Authentication system with **Email Verification** & **Password Reset** using a secure 6-digit OTP sent directly to the user's email.
+
+---
+
+## 🌐 Live Demo
+
+🔗 [**Frontend**](https://mern-auth-fronetnd.vercel.app)  
+🔗 [**Backend API**](https://mern-auth-sigma-azure.vercel.app)
+
+---
+
+</div>
+
+# MERN AUTH 🔐
+
 A complete Authentication system that includes Email Verification and Password Reset Feature using a secure 6 digit OTP sent directly to user's email address.
 
 ## Project Overview
